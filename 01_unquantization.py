@@ -2,6 +2,10 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 import torch
 
 
+device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+print("device:", device)
+
+
 def load_model():
     model_name = "meta-llama/Meta-Llama-3.1-8B-Instruct"
     model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto")
@@ -16,7 +20,8 @@ def show_data_type_of_model_parameters_and_memory_footprints(model):
 
 def inference(model_name, model):
     tokenizer = AutoTokenizer.from_pretrained(model_name)
-    input = tokenizer("Portugal is", return_tensors="pt").to("cuda")
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    input = tokenizer("Portugal is", return_tensors="pt").to(device)
     print("input", input)
 
     response = model.generate(**input, max_new_tokens=50)
@@ -26,5 +31,7 @@ def inference(model_name, model):
 
 if __name__ == "__main__":
     model_name, model = load_model()
-    show_data_type_of_model_parameters_and_memory_footprints(model_name, model)
-    # inference(model)
+    print("model_name", model_name)
+    print("model", model)
+    show_data_type_of_model_parameters_and_memory_footprints(model)
+    inference(model_name, model)
