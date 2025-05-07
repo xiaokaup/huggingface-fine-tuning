@@ -5,3 +5,8 @@ bitsandbytes
 torch
 torchvision
 torchaudio
+
+# LoRA
+datasets
+trl
+peft
