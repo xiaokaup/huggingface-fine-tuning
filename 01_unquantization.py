@@ -19,6 +19,7 @@ def show_data_type_of_model_parameters_and_memory_footprints(model):
 
 
 def inference(model_name, model):
+    print("hit inference")
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     input = tokenizer("Portugal is", return_tensors="pt").to(device)
     print("input", input)
@@ -29,8 +30,10 @@ def inference(model_name, model):
 
 
 if __name__ == "__main__":
+    print("=== start ===")
     model_name, model = load_model()
     print("model_name", model_name)
     print("model", model)
     show_data_type_of_model_parameters_and_memory_footprints(model)
     inference(model_name, model)
+    print("=== end ===")

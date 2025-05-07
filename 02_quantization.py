@@ -12,17 +12,18 @@ def load_model_with_quantization():
 
     # 4-bit 量化配置（大幅减少内存占用）
     # BitsAndBytesConfig not support MacOS M1
-    # bnb_config = BitsAndBytesConfig(
-    #     load_in_4bit=True,
-    #     bnb_4bit_quant_type="nf4",
-    #     bnb_4bit_use_double_quant=True,
-    #     bnb_4bit_compute_dtype=torch.bfloat16,  # 兼容 Apple Neural Engine
-    # )
+    bnb_config = BitsAndBytesConfig(
+        load_in_8bit=True
+        # load_in_4bit=True,
+        # bnb_4bit_quant_type="nf4",
+        # bnb_4bit_use_double_quant=True,
+        # bnb_4bit_compute_dtype=torch.bfloat16,  # 兼容 Apple Neural Engine
+    )
 
     # 加载模型（自动分配到 mps/cpu）
     model = AutoModelForCausalLM.from_pretrained(
         model_name,
-        # quantization_config=bnb_config,
+        quantization_config=bnb_config,
         device_map="auto",  # 自动选择 mps/cpu
     )
     return model_name, model
@@ -35,6 +36,7 @@ def show_data_type_of_model_parameters_and_memory_footprints(model):
 
 
 def inference(model_name, model):
+    print("hit inference")
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     input = tokenizer("Portugal is", return_tensors="pt").to(device)
     print("input", input)
@@ -45,8 +47,10 @@ def inference(model_name, model):
 
 
 if __name__ == "__main__":
+    print("=== start ===")
     model_name, model = load_model_with_quantization()
     print("model_name", model_name)
     print("model", model)
     show_data_type_of_model_parameters_and_memory_footprints(model)
     inference(model_name, model)
+    print("=== end ===")
