@@ -1,9 +1,10 @@
+# !pip install transformers==4.44.1
+# !pip install accelerate
+# !pip install bitsandbytes==0.43.3
+# !pip install -U "huggingface_hub[cli]"
+
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 import torch
-
-
-device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
-print("device:", device)
 
 
 def load_model():
@@ -21,7 +22,7 @@ def show_data_type_of_model_parameters_and_memory_footprints(model):
 def inference(model_name, model):
     print("hit inference")
     tokenizer = AutoTokenizer.from_pretrained(model_name)
-    input = tokenizer("Portugal is", return_tensors="pt").to(device)
+    input = tokenizer("Portugal is", return_tensors="pt").to("cuda")
     print("input", input)
 
     response = model.generate(**input, max_new_tokens=50)
