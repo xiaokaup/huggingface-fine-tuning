@@ -3,8 +3,11 @@
 # !pip install bitsandbytes==0.43.3
 # !pip install -U "huggingface_hub[cli]"
 
+import os
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 import torch
+
+os.environ["HF_TOKEN"] = ""
 
 
 def load_model():

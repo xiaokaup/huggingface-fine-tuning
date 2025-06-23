@@ -1,8 +1,11 @@
 # 01-Get Quantized Model
 ## NF4 (4-bit NormalFloat) quantization
 ## Bitsandbytes configuration
+import os
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 import torch
+
+os.environ["HF_TOKEN"] = ""
 
 
 bnb_config = BitsAndBytesConfig(

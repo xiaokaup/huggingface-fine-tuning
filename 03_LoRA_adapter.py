@@ -1,5 +1,8 @@
 # 01-Load model
+import os
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+
+os.environ["HF_TOKEN"] = ""
 
 bnb_config = BitsAndBytesConfig(load_in_8bit=True)
 

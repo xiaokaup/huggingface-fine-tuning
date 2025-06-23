@@ -1,5 +1,8 @@
+import os
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 import torch
+
+os.environ["HF_TOKEN"] = ""
 
 
 def load_model_with_quantization():
