@@ -1,3 +1,8 @@
+# !pip install transformers==4.44.1
+# !pip install accelerate
+# !pip install bitsandbytes==0.43.3
+# !pip install -U "huggingface_hub[cli]"
+
 import os
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 import torch
