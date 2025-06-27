@@ -4,10 +4,12 @@
 # !pip install -U "huggingface_hub[cli]"
 
 import os
-from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
-import torch
 
 os.environ["HF_TOKEN"] = ""
+
+
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+import torch
 
 
 def load_model():
